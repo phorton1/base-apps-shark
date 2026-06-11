@@ -11,8 +11,8 @@ use strict;
 use warnings;
 use Time::Local;
 use Pub::Utils qw(display error);
-use apps::raymarine::NET::a_defs;
-use apps::raymarine::NET::e_wp_defs;
+use Pub::Ray::NET::a_defs;
+use Pub::Ray::NET::e_wp_defs;
 
 BEGIN
 {

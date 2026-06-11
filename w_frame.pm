@@ -21,7 +21,7 @@ use w_resources;
 use winShark;
 use winSniffer;
 use winRAYDP;
-use apps::raymarine::NET::winFILESYS;
+use Pub::Ray::NET::winFILESYS;
 use winDBNAV;
 use base qw(Pub::WX::Frame);
 

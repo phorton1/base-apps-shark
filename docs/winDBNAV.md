@@ -7,15 +7,13 @@
 **[winFILESYS](winFILESYS.md)** --
 **winDBNAV**
 
-Folders: **[Raymarine](../../../docs/readme.md)** --
-**[NET](../../../NET/docs/readme.md)** --
-**[FSH](../../../FSH/docs/readme.md)** --
-**[CSV](../../../CSV/docs/readme.md)** --
-**shark** --
-**[navMate](../../../apps/navMate/docs/readme.md)**
+repos: **[phorton1](https://github.com/phorton1)** --
+**[Ray Library](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md)** --
+**shark Tool** --
+**[navMate App](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md)**
 
 **winDBNAV** is a live read-only view of navigation field values broadcast by the
-E80 over the [DBNAV](../../../NET/docs/DBNAV.md) multicast service (port 2562). The tab title is **DBNAV(n)**
+E80 over the [DBNAV](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/DBNAV.md) multicast service (port 2562). The tab title is **DBNAV(n)**
 where n is the instance number; multiple instances can be opened simultaneously.
 There are no user controls beyond column sorting.
 
@@ -58,4 +56,4 @@ The display updates continuously as new DBNAV broadcast packets arrive from the 
 
 ---
 
-**Next:** [Cables](../../../NET/docs/ethernet_cables.md)
+**Next:** [Home](shark.md)

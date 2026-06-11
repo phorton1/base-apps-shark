@@ -10,7 +10,7 @@ use Wx::Event qw(
 	EVT_MOUSEWHEEL
 	EVT_SCROLLWIN
 	EVT_LEFT_UP );
-use apps::raymarine::NET::a_utils;
+use Pub::Ray::NET::a_utils;
 use Pub::Utils;
 use base qw(Wx::ScrolledWindow);
 

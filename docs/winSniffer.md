@@ -7,12 +7,10 @@
 **[winFILESYS](winFILESYS.md)** --
 **[winDBNAV](winDBNAV.md)**
 
-Folders: **[Raymarine](../../../docs/readme.md)** --
-**[NET](../../../NET/docs/readme.md)** --
-**[FSH](../../../FSH/docs/readme.md)** --
-**[CSV](../../../CSV/docs/readme.md)** --
-**shark** --
-**[navMate](../../../apps/navMate/docs/readme.md)**
+repos: **[phorton1](https://github.com/phorton1)** --
+**[Ray Library](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md)** --
+**shark Tool** --
+**[navMate App](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md)**
 
 **winSniffer** is the control panel for shark's tshark-based packet sniffer. The
 sniffer monitors raw ethernet traffic between the E80 and other devices (such as
@@ -28,7 +26,7 @@ update.
 
 ## Per-port rows
 
-One row per [RAYNET](../../../NET/docs/RAYNET.md) port, sorted alphabetically by RAYNAME. Each row shows port
+One row per [RAYNET](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYNET.md) port, sorted alphabetically by RAYNAME. Each row shows port
 number, RAYNAME, and protocol type, followed by four checkboxes:
 
 | Checkbox | Description |

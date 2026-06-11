@@ -7,16 +7,14 @@
 **[winFILESYS](winFILESYS.md)** --
 **[winDBNAV](winDBNAV.md)**
 
-Folders: **[Raymarine](../../../docs/readme.md)** --
-**[NET](../../../NET/docs/readme.md)** --
-**[FSH](../../../FSH/docs/readme.md)** --
-**[CSV](../../../CSV/docs/readme.md)** --
-**shark** --
-**[navMate](../../../apps/navMate/docs/readme.md)**
+repos: **[phorton1](https://github.com/phorton1)** --
+**[Ray Library](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md)** --
+**shark Tool** --
+**[navMate App](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md)**
 
-**shark** (`apps/shark/shark.pm`) is the engineering application for probing and
+**shark** (`shark.pm`) is the engineering application for probing and
 operating the SeatalkHS protocols. It is a **wxPerl** GUI application that uses the
-**NET library** (`NET/`) to connect to an E80 via [RAYDP](../../../NET/docs/RAYDP.md), [WPMGR](../../../NET/docs/WPMGR.md), [TRACK](../../../NET/docs/TRACK.md), [FILESYS](../../../NET/docs/FILESYS.md), and
+**[NET library](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/readme.md)** to connect to an E80 via [RAYDP](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYDP.md), [WPMGR](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/WPMGR.md), [TRACK](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/TRACK.md), [FILESYS](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/FILESYS.md), and
 other services. shark also starts a serial command interface, a tshark-based packet
 sniffer, and an HTTP server (`s_server.pm`, port 9882) for Google Earth waypoint
 serving. The HTTP server extends `NET/h_server.pm`, the shared base class also used
@@ -65,19 +63,19 @@ into a serial terminal and processed by `handleSerialCommand()`.
 | `i`                 | Call DB `uiInit()`                                  |
 | `fids`              | Show all known FIDs via `showFids()`                |
 
-**[DBNAV](../../../NET/docs/DBNAV.md):**
+**[DBNAV](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/DBNAV.md):**
 
 | Command             | Description                                         |
 | ------------------- | --------------------------------------------------- |
 | `v`                 | Show current DBNAV field values                     |
 
-**[FILESYS](../../../NET/docs/FILESYS.md):**
+**[FILESYS](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/FILESYS.md):**
 
 | Command                    | Description                                  |
 | -------------------------- | -------------------------------------------- |
 | `f <cmd> <path>`           | File command: cmd = DIR, SIZE, FILE, or ID   |
 
-**[TRACK](../../../NET/docs/TRACK.md):**
+**[TRACK](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/TRACK.md):**
 
 | Command                    | Description                                  |
 | -------------------------- | -------------------------------------------- |
@@ -95,7 +93,7 @@ into a serial terminal and processed by `handleSerialCommand()`.
 | `t erase <name>`           | Erase saved track by name                    |
 | `t rename <old> <new>`     | Rename a saved track                         |
 
-**[WPMGR](../../../NET/docs/WPMGR.md):**
+**[WPMGR](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/WPMGR.md):**
 
 | Command                    | Description                                  |
 | -------------------------- | -------------------------------------------- |
@@ -157,6 +155,15 @@ Probe files for implemented protocols are in `NET/probes/`. The probe system was
 the primary tool for discovering command semantics by sending structured guesses
 to the E80 and observing responses.
 
+## Credits
+
+- [**Wireshark / tshark**](https://www.wireshark.org/) - the packet capture
+  engine behind shark's sniffer; tshark performs the raw ethernet capture
+  that shark decodes and displays.
+
+- [**wxPerl / wxWidgets**](https://www.wxwidgets.org/) - the cross-platform
+  GUI toolkit used for all of shark's windows and panels.
+
 ## License
 
 Copyright (C) 2026 Patrick Horton
@@ -164,6 +171,18 @@ Copyright (C) 2026 Patrick Horton
 This repository is free software, released under the
 [GNU General Public License v3](../LICENSE.TXT) or any later version.
 See [LICENSE.TXT](../LICENSE.TXT) or <https://www.gnu.org/licenses/> for details.
+
+## Please Also See
+
+- [**phorton1/base-apps-shark**](https://github.com/phorton1/base-apps-shark) -
+  this repository on GitHub
+
+- [**Ray Library**](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md) -
+  the reverse-engineered SeatalkHS protocols, FSH file format, and CSV
+  conversion library that shark is built on.
+
+- [**navMate**](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md) -
+  the navigation knowledge management application built on the same library.
 
 ---
 

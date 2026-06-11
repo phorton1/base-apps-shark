@@ -27,28 +27,28 @@ use Pub::WX::Resources;
 use Pub::WX::AppConfig;
 use Pub::WX::Main;
 
-use apps::raymarine::NET::a_defs;
-use apps::raymarine::NET::a_utils;
-use apps::raymarine::NET::b_sock;
-use apps::raymarine::NET::b_probe;
+use Pub::Ray::NET::a_defs;
+use Pub::Ray::NET::a_utils;
+use Pub::Ray::NET::b_sock;
+use Pub::Ray::NET::b_probe;
 
-use apps::raymarine::NET::c_RAYDP;
-use apps::raymarine::NET::d_DB;
-use apps::raymarine::NET::d_TRACK;
-use apps::raymarine::NET::d_WPMGR;
-use apps::raymarine::NET::d_FILESYS;
-use apps::raymarine::NET::d_DBNAV;
+use Pub::Ray::NET::c_RAYDP;
+use Pub::Ray::NET::d_DB;
+use Pub::Ray::NET::d_TRACK;
+use Pub::Ray::NET::d_WPMGR;
+use Pub::Ray::NET::d_FILESYS;
+use Pub::Ray::NET::d_DBNAV;
 
-use apps::raymarine::NET::e_WPMGR;
-use apps::raymarine::NET::e_TRACK;
-use apps::raymarine::NET::e_FILESYS;
+use Pub::Ray::NET::e_WPMGR;
+use Pub::Ray::NET::e_TRACK;
+use Pub::Ray::NET::e_FILESYS;
 
-use apps::raymarine::NET::fshWriter;
+use Pub::Ray::NET::fshWriter;
 
-use apps::raymarine::NET::e_wp_api;
+use Pub::Ray::NET::e_wp_api;
 use s_server;
 
-use apps::raymarine::NET::s_serial;
+use Pub::Ray::NET::s_serial;
 use s_sniffer;
 use w_resources;
 use w_frame;
@@ -96,14 +96,14 @@ sub handleSerialCommand
 display(0,0,"shark.pm initializing");
 
 
-apps::raymarine::NET::a_defs::initServices(
+Pub::Ray::NET::a_defs::initServices(
 	wpmgr   => $WITH_WPMGR,
 	track   => $WITH_TRACK,
 	filesys => $WITH_FILESYS,
 	db      => $WITH_DB,
 	dbnav   => $WITH_DBNAV,
 );
-apps::raymarine::NET::c_RAYDP->new();
+Pub::Ray::NET::c_RAYDP->new();
 if ($WITH_RAYDP)
 {
 	$raydp->start();
@@ -123,7 +123,7 @@ startHTTPServer() if $WITH_HTTP_SERVER;
 
 if ($WITH_SERIAL)
 {
-	my $serial = apps::raymarine::NET::s_serial->new(\&handleSerialCommand);
+	my $serial = Pub::Ray::NET::s_serial->new(\&handleSerialCommand);
 	$serial->start();
 }
 

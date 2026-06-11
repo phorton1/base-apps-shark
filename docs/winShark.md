@@ -7,15 +7,13 @@
 **[winFILESYS](winFILESYS.md)** --
 **[winDBNAV](winDBNAV.md)**
 
-Folders: **[Raymarine](../../../docs/readme.md)** --
-**[NET](../../../NET/docs/readme.md)** --
-**[FSH](../../../FSH/docs/readme.md)** --
-**[CSV](../../../CSV/docs/readme.md)** --
-**shark** --
-**[navMate](../../../apps/navMate/docs/readme.md)**
+repos: **[phorton1](https://github.com/phorton1)** --
+**[Ray Library](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md)** --
+**shark Tool** --
+**[navMate App](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md)**
 
 **winShark** is the control panel for shark's active protocol monitoring - the
-traffic that shark's own [RAYNET](../../../NET/docs/RAYNET.md) service connections send and receive. It has no
+traffic that shark's own [RAYNET](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYNET.md) service connections send and receive. It has no
 master on/off; individual ports are gated by their active checkbox.
 
 ![winShark](images/winShark.png)
@@ -31,7 +29,7 @@ number, RAYNAME, and protocol type, followed by three checkboxes:
 | log      | Write traffic to `shark.log` or `rns.log` (selected by packet origin) in addition to showing it on the console |
 | only     | Suppress console output and write to the log file only. Useful for high-volume ports during a session where console noise would be overwhelming |
 
-At startup, **[TRACK](../../../NET/docs/TRACK.md)** and **[WPMGR](../../../NET/docs/WPMGR.md)** have their active checkboxes checked by
+At startup, **[TRACK](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/TRACK.md)** and **[WPMGR](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/WPMGR.md)** have their active checkboxes checked by
 default, reflecting the `$ACTIVE_TRACK` and `$ACTIVE_WPMGR` defaults in
 `NET/a_mon.pm`. All other ports start inactive.
 

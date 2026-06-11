@@ -7,15 +7,13 @@
 **[winFILESYS](winFILESYS.md)** --
 **[winDBNAV](winDBNAV.md)**
 
-Folders: **[Raymarine](../../../docs/readme.md)** --
-**[NET](../../../NET/docs/readme.md)** --
-**[FSH](../../../FSH/docs/readme.md)** --
-**[CSV](../../../CSV/docs/readme.md)** --
-**shark** --
-**[navMate](../../../apps/navMate/docs/readme.md)**
+repos: **[phorton1](https://github.com/phorton1)** --
+**[Ray Library](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md)** --
+**shark Tool** --
+**[navMate App](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md)**
 
-**winRAYDP** is a live view of every [RAYNET](../../../NET/docs/RAYNET.md) service currently being advertised on
-the network by the [RAYDP](../../../NET/docs/RAYDP.md) discovery protocol. Rows appear and disappear dynamically
+**winRAYDP** is a live view of every [RAYNET](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYNET.md) service currently being advertised on
+the network by the [RAYDP](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYDP.md) discovery protocol. Rows appear and disappear dynamically
 as devices announce or withdraw services.
 
 ![winRAYDP](images/winRAYDP.png)
@@ -30,7 +28,7 @@ as devices announce or withdraw services.
 | PROTO   | Protocol - `tcp`, `udp`, or `mcast` |
 | IP      | Device IP address, or multicast group address for mcast services |
 | PORT    | Service port number |
-| CONNECT | Action checkbox. For implemented services ([FILESYS](../../../NET/docs/FILESYS.md), DB, [WPMGR](../../../NET/docs/WPMGR.md), [TRACK](../../../NET/docs/TRACK.md), [DBNAV](../../../NET/docs/DBNAV.md)), labeled **connect** - checking connects shark to that service, unchecking disconnects. For all other services, labeled **spawn** - checking opens a raw connection for manual probing |
+| CONNECT | Action checkbox. For implemented services ([FILESYS](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/FILESYS.md), DB, [WPMGR](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/WPMGR.md), [TRACK](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/TRACK.md), [DBNAV](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/DBNAV.md)), labeled **connect** - checking connects shark to that service, unchecking disconnects. For all other services, labeled **spawn** - checking opens a raw connection for manual probing |
 | LOCAL   | Local port assigned on the laptop side, shown only when it differs from the service port. Blank for multicast services and when the OS assigns the same port number |
 
 ## Sort by

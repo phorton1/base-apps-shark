@@ -7,15 +7,13 @@
 **winFILESYS** --
 **[winDBNAV](winDBNAV.md)**
 
-Folders: **[Raymarine](../../../docs/readme.md)** --
-**[NET](../../../NET/docs/readme.md)** --
-**[FSH](../../../FSH/docs/readme.md)** --
-**[CSV](../../../CSV/docs/readme.md)** --
-**shark** --
-**[navMate](../../../apps/navMate/docs/readme.md)**
+repos: **[phorton1](https://github.com/phorton1)** --
+**[Ray Library](https://github.com/phorton1/base-Pub-Ray/blob/master/docs/readme.md)** --
+**shark Tool** --
+**[navMate App](https://github.com/phorton1/base-apps-navMate/blob/master/docs/readme.md)**
 
 **winFILESYS** is a read-only file browser for the CompactFlash card in the E80,
-accessed via the [FILESYS](../../../NET/docs/FILESYS.md) protocol (port 2049). It supports directory navigation
+accessed via the [FILESYS](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/FILESYS.md) protocol (port 2049). It supports directory navigation
 and file download, including recursive directory download.
 
 ![winFILESYS](images/winFILESYS.png)
@@ -26,7 +24,7 @@ and file download, including recursive directory download.
 | ------- | ----------- |
 | Status (top left) | Current FILESYS protocol state: **COMPLETE** (green), **ERROR** (red), **START** (blue), **ILLEGAL** (grey) |
 | Path (below status) | Current directory path on the CF card, prefixed by the volume label |
-| Device combo (top right) | Selects which E80's FILESYS port to browse when multiple E80s are on the network. Populated automatically from [RAYDP](../../../NET/docs/RAYDP.md) discovery |
+| Device combo (top right) | Selects which E80's FILESYS port to browse when multiple E80s are on the network. Populated automatically from [RAYDP](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYDP.md) discovery |
 
 ## File list
 

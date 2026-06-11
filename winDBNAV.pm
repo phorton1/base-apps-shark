@@ -18,9 +18,9 @@ use Wx::Event qw(
 	EVT_SIZE );
 use Pub::Utils;
 use Pub::WX::Window;
-use apps::raymarine::NET::a_defs;
-use apps::raymarine::NET::a_utils;
-use apps::raymarine::NET::c_RAYDP;
+use Pub::Ray::NET::a_defs;
+use Pub::Ray::NET::a_utils;
+use Pub::Ray::NET::c_RAYDP;
 # use d_DB;
 # use d_DBNAV;
 use x_listCtrl;

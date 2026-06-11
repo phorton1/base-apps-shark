@@ -17,9 +17,9 @@ use Wx::Event qw(
 	EVT_COMBOBOX );
 use Pub::Utils;
 use Pub::WX::Window;
-use apps::raymarine::NET::a_defs;
-use apps::raymarine::NET::a_mon;
-use apps::raymarine::NET::a_utils;
+use Pub::Ray::NET::a_defs;
+use Pub::Ray::NET::a_mon;
+use Pub::Ray::NET::a_utils;
 use s_sniffer;
 use base qw(Wx::ScrolledWindow Pub::WX::Window);
 

@@ -28,22 +28,22 @@ use threads::shared;
 use Pub::Utils;
 use Pub::ServerUtils;
 use Pub::HTTP::Response qw(http_ok http_error);
-use apps::raymarine::NET::a_defs;
-use apps::raymarine::NET::a_mon;
-use apps::raymarine::NET::a_utils;
-use apps::raymarine::NET::c_RAYDP;
-use apps::raymarine::NET::fshWriter;
-use apps::raymarine::NET::h_server;
+use Pub::Ray::NET::a_defs;
+use Pub::Ray::NET::a_mon;
+use Pub::Ray::NET::a_utils;
+use Pub::Ray::NET::c_RAYDP;
+use Pub::Ray::NET::fshWriter;
+use Pub::Ray::NET::h_server;
 use s_harness;
 use tcpScanner;
 use udpScanner;
-use base qw(apps::raymarine::NET::h_server);
+use base qw(Pub::Ray::NET::h_server);
 
 
 my $dbg = 0;
 
 my $SERVER_PORT = 9882;
-my $SRC_DIR     = '/base/apps/raymarine/apps/shark';
+my $SRC_DIR     = '/base/apps/shark';
 
 my $ray_server;
 
@@ -226,7 +226,7 @@ sub handleCommand
 
 	elsif ($lpart eq 'write')
 	{
-		apps::raymarine::NET::fshWriter::write();
+		Pub::Ray::NET::fshWriter::write();
 	}
 
 	# WPMGR debug commands (shark-only; require test harness or name translation)
