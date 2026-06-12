@@ -56,6 +56,8 @@ use tcpScanner;
 use udpScanner;
 use base 'Wx::App';
 
+setStandardTempDir($appName);
+setStandardDataDir($appName);
 $ini_file = "$temp_dir/$appName.ini";
 $appClientName = 'shark';
 
