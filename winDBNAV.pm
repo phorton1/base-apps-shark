@@ -21,8 +21,6 @@ use Pub::WX::Window;
 use Pub::Ray::NET::a_defs;
 use Pub::Ray::NET::a_utils;
 use Pub::Ray::NET::c_RAYDP;
-# use d_DB;
-# use d_DBNAV;
 use x_listCtrl;
 use base qw(Wx::ScrolledWindow Pub::WX::Window);
 
@@ -32,25 +30,29 @@ my $dbg_win = 0;
 my $TOP_MARGIN = 0;
 
 
-my $COL_FID 	= 0;
-my $COL_TTL 	= 1;
-my $COL_TYPE 	= 2;
-my $COL_SUB 	= 3;
-my $COL_EXTRA 	= 4;
-my $COL_DATA 	= 5;
-my $COL_NAME	= 6;
-my $COL_VALUE 	= 7;
+my $COL_FID    = 0;
+my $COL_TTL    = 1;
+my $COL_ENC    = 2;
+my $COL_FAMILY = 3;
+my $COL_PGN    = 4;
+my $COL_SA     = 5;
+my $COL_FLAG   = 6;
+my $COL_DATA   = 7;
+my $COL_NAME   = 8;
+my $COL_VALUE  = 9;
 
 
 my $columns = [
-	{name => 'FID',		field_name => 'fid',		width => 5, 	},
-	{name => 'TTL',		field_name => 'ttl',		width => 4,		},
-	{name => 'TYPE',	field_name => 'type',		width => 5,		},
-	{name => 'SUB',		field_name => 'subtype',	width => 4, 	},
-	{name => 'EXTRA',	field_name => 'extra',		width => 13,	},
-	{name => 'DATA',	field_name => 'data',		width => 18,	},
-	{name => 'NAME',	field_name => 'name',		width => 16,	},
-	{name => 'VALUE',	field_name => 'value',		width => 50,	},
+	{name => 'FID',        field_name => 'fid',          width => 5,  },
+	{name => 'TTL',        field_name => 'ttl',          width => 4,  },
+	{name => 'ENC',        field_name => 'enc',          width => 6,  },
+	{name => 'FAMILY',     field_name => 'family_name',  width => 12, },
+	{name => 'PGN',        field_name => 'pgn',          width => 8,  },
+	{name => 'SA',         field_name => 'sa',           width => 5,  },
+	{name => 'FLAG',       field_name => 'flag',         width => 6,  },
+	{name => 'DATA',       field_name => 'data',         width => 18, },
+	{name => 'NAME',       field_name => 'name',         width => 16, },
+	{name => 'VALUE',      field_name => 'value',        width => 50, },
 ];
 
 
@@ -112,29 +114,9 @@ sub valueToText
 			degreeMinutes($coords->{lat}),
 			degreeMinutes($coords->{lon}));
 	}
-	elsif ($name =~ /WindAngle/)
-	{
-		my $char = 'S';
-		my $use_angle = $value;
-		if ($use_angle > 180)
-		{
-			$char = 'P';
-			$use_angle = 360-$use_angle;
-		}
-		$value = sprintf("%-5.1f == %5.1f $char",$value,$use_angle);
-	}
 	
 	return $value;
 }
-
-
-# sub fullFidName
-# {
-# 	my ($fid) = @_;
-# 	my $field_def = $DB_FIELDS{$fid};
-# 	my $name = $field_def ? $field_def->{name} : 'UNKNOWN';
-# 	return sprintf("$name(%02x)",$fid);
-# }
 
 
 sub getDisplayValue
@@ -143,13 +125,12 @@ sub getDisplayValue
 	my ($this,$rec,$col_num,$value) = @_;
 
 	my $name = $rec->{name};
+	return '' if !defined($value);
 
 	$value = valueToText($name,$value) if $col_num == $COL_VALUE;
 	$value = _lim(unpack('H*',$value),16) if $col_num == $COL_DATA;
-	$value = sprintf("%02x",$value) if
-		$col_num == $COL_FID ||
-		$col_num == $COL_TYPE ||
-		$col_num == $COL_SUB;
+	$value = sprintf("%02x",$value) if $col_num == $COL_FID;
+	$value = sprintf("%04x",$value) if $col_num == $COL_ENC;
 
 	return $value;
 }
@@ -168,11 +149,13 @@ sub cmpRecs
 		$val_a = $val_b;
 		$val_b = $tmp;
 	}
-	return $val_a <=> $val_b if
+	return ($val_a//-1) <=> ($val_b//-1) if
 		$sort_col == $COL_FID ||
 		$sort_col == $COL_TTL ||
-		$sort_col == $COL_TYPE ||
-		$sort_col == $COL_SUB;
+		$sort_col == $COL_ENC ||
+		$sort_col == $COL_PGN ||
+		$sort_col == $COL_SA ||
+		$sort_col == $COL_FLAG;
 	if ($sort_col == $COL_DATA)
 	{
 		my $len = length($val_a);
@@ -187,7 +170,7 @@ sub cmpRecs
 			if $len == 4;
 		return unpack('H*',$val_a) cmp unpack('H*',$val_b)
 	}
-	return lc($val_a) cmp lc($val_b);
+	return lc($val_a//'') cmp lc($val_b//'');
 }
 
 

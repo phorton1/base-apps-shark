@@ -250,7 +250,7 @@ sub notifyData
 			{
                 my $field = $$cols[$i]->{field_name};
                 my $new_value = $new_rec->{$field};
-				if ($rec->{$field} ne $new_value)
+				if (($rec->{$field}//'') ne ($new_value//''))
 				{
                     $rec->{changed}->[$i] = 1;
                     $rec->{change_time}->[$i] = $now;
