@@ -57,12 +57,27 @@ my $ID_SHARK_BASE 	 = 1700;
 my $font_fixed = Wx::Font->new(10,wxFONTFAMILY_MODERN,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD);
 
 
-sub cmpFunc
+sub rowDef
+	# a monitor row is keyed by a numeric port for a fixed service,
+	# or by a "sid:proto" string for an instrument tail service
 {
-	my ($a,$b) = @_;
-	return
-		lc($SNIFFER_DEFAULTS{$a}->{name}) cmp
-		lc($SNIFFER_DEFAULTS{$b}->{name});
+	my ($key) = @_;
+	return $SNIFFER_DEFAULTS{$key} || $SNIFFER_TAIL_DEFAULTS{$key};
+}
+
+
+sub rowKeys
+	# fixed ports first, in port-number order, then the instrument tail,
+	# in sid order (then proto), so the two groups read as distinct blocks
+{
+	my @fixed = sort { $a <=> $b } keys %SNIFFER_DEFAULTS;
+	my @tail  = sort
+	{
+		my ($sa,$pa) = split(/:/,$a);
+		my ($sb,$pb) = split(/:/,$b);
+		$sa <=> $sb || $pa cmp $pb;
+	} keys %SNIFFER_TAIL_DEFAULTS;
+	return (@fixed,@tail);
 }
 
 
@@ -91,11 +106,11 @@ sub new
 	Wx::StaticText->new($this,-1,   'shark/self',  [$CHECK_COL + 4*$CHECK_WIDTH,$START_TOP + 2*$LINE_HEIGHT]);
 
 	my $num = 0;
-	for my $port (sort {cmpFunc($a,$b)} keys %SNIFFER_DEFAULTS)
+	for my $port (rowKeys())
 	{
-		my $def = $SNIFFER_DEFAULTS{$port};
+		my $def = rowDef($port);
 		my $title =
-			pad($port,6).
+			pad($port,8).
 			pad($def->{name},12).
 			pad($def->{proto},5);
 		my $active_id = $ID_ACTIVE_BASE + $num;
@@ -130,8 +145,8 @@ sub new
 		$num++;
 	}
 
-	# $this->SetVirtualSize([$COL_TOTAL * $CHAR_WIDTH + 10,$TOP_MARGIN]);
-	# $this->SetScrollRate(0,$LINE_HEIGHT);
+	$this->SetVirtualSize([$CHECK_COL + 5*$CHECK_WIDTH,$TOP_MARGIN + $num*$LINE_HEIGHT]);
+	$this->SetScrollRate(0,$LINE_HEIGHT);
 	EVT_BUTTON($this,-1,\&onButton);
 	EVT_CHECKBOX($this,-1,\&onCheckBox);
 	EVT_IDLE($this,\&onIdle);
@@ -151,7 +166,7 @@ sub onIdle
 	return if !$sniffer;
 
 	my $num = 0;
-	for my $port (sort {cmpFunc($a,$b)} keys %SNIFFER_DEFAULTS)
+	for my $port (rowKeys())
 	{
 		my $id = $ID_COUNT_BASE + $num;
 		my $count = $sniffer->{parser_counts}->{$port};
@@ -208,9 +223,9 @@ sub onButton
 	}
 
 	my $num = 0;
-	for my $port (sort {cmpFunc($a,$b)} keys %SNIFFER_DEFAULTS)
+	for my $port (rowKeys())
 	{
-		my $def = $SNIFFER_DEFAULTS{$port};
+		my $def = rowDef($port);
 		if ($bit)
 		{
 			$on ? ($def->{log} |= $bit) : ($def->{log} &= ~$bit);
@@ -248,7 +263,7 @@ sub onCheckBox
 	}
 
 	my $port = $box->{port};
-	my $def = $SNIFFER_DEFAULTS{$port};
+	my $def = rowDef($port);
 	display($dbg_win,1,sprintf("onCheckbox port($port) before active($def->{active}) log(%04x)",$def->{log}));
 
 	if ($id >= $ID_SELF_BASE)

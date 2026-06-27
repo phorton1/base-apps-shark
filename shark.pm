@@ -30,7 +30,6 @@ use Pub::WX::Main;
 use Pub::Ray::NET::a_defs;
 use Pub::Ray::NET::a_utils;
 use Pub::Ray::NET::b_sock;
-use Pub::Ray::NET::b_probe;
 
 use Pub::Ray::NET::c_RAYDP;
 use Pub::Ray::NET::d_DB;

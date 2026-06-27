@@ -6,6 +6,7 @@
 #
 # Adds:
 #   /api/colormap   - per-service color assignments from SHARK_DEFAULTS
+#                     plus the instrument tail from SHARK_TAIL_DEFAULTS
 #
 # Extends handleCommand with shark-specific commands:
 #   i               - DB service uiInit
@@ -17,7 +18,6 @@
 #   log <msg>       - mark both log files
 #   scan [lo hi]    - TCP port scan
 #   udp [lo hi]     - UDP port scan
-#   p <svc> [args]  - probe a service
 #   write           - fshWriter::write
 
 package s_server;
@@ -204,24 +204,6 @@ sub handleCommand
 			: $udp_scanner->showAliveScans();
 	}
 
-	# Probe
-
-	elsif ($lpart eq 'p')
-	{
-		my ($name,@params) = split(/\s+/,$rpart);
-		my $args = join(' ',@params) || '';
-		$name = 'TRACK'   if $name eq 't';
-		$name = 'WPMGR'   if $name eq 'w';
-		$name = 'FILESYS' if $name eq 'f';
-		$name = 'DB'      if $name eq 'd';
-		my $service_port =
-			$raydp->findImplementedService($name,1) ||
-			$raydp->findServicePortByName($name,1);
-		return error("service $name("._def($service_port).") doesn't exist or is not connected")
-			if !($service_port && $service_port->{connected});
-		$service_port->doProbe($args);
-	}
-
 	# fshWriter
 
 	elsif ($lpart eq 'write')
@@ -337,7 +319,6 @@ sub commandHelp
 		[ 'log <msg>',                   'mark both log files'                 ],
 		[ 'scan [lo hi]',                'TCP port scan'                       ],
 		[ 'udp [lo hi]',                 'UDP port scan'                       ],
-		[ 'p <svc> [args]',              'probe a service'                     ],
 		[ 'write',                       'fshWriter::write'                    ],
 		[ 'create <wp|route|group> <n>', 'create N test objects of given type' ],
 		[ 'route <id> [<+|-> <wp>]',     'add/remove waypoint or show route'   ],
@@ -369,11 +350,12 @@ sub api_colormap
 	);
 
 	my %map;
-	for my $port (sort { $a <=> $b } keys %SHARK_DEFAULTS)
+
+	my $add_entry = sub
 	{
-		my $def = $SHARK_DEFAULTS{$port};
-		next if !$def->{name};
-		my $entry = { name => $def->{name}, port => $port+0 };
+		my ($key,$def) = @_;
+		return if !$def->{name};
+		my $entry = { name => $def->{name}, port => $key };
 		if ($def->{in_colors})
 		{
 			my @in  = @{$def->{in_colors}};
@@ -393,8 +375,22 @@ sub api_colormap
 			$entry->{in_color_name}  = $color_names{$ic} || "color_$ic";
 			$entry->{out_color_name} = $color_names{$oc} || "color_$oc";
 		}
-		$map{$port} = $entry;
+		$map{$key} = $entry;
+	};
+
+	# the fixed ports, keyed by numeric port, then the instrument tail,
+	# keyed by "sid:proto" (these take a runtime port, so they have no
+	# deterministic port number to key on)
+
+	for my $port (sort { $a <=> $b } keys %SHARK_DEFAULTS)
+	{
+		$add_entry->($port+0,$SHARK_DEFAULTS{$port});
 	}
+	for my $key (sort keys %SHARK_TAIL_DEFAULTS)
+	{
+		$add_entry->($key,$SHARK_TAIL_DEFAULTS{$key});
+	}
+
 	return $this->api_json_response($request,\%map);
 }
 

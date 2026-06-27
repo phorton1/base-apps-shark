@@ -118,12 +118,6 @@ into a serial terminal and processed by `handleSerialCommand()`.
 | `scan <low> <high>`        | TCP port scan range                          |
 | `udp [a] <low> <high>`     | UDP scan (a = aggressive mode)               |
 
-**Probe execution:**
-
-| Command                           | Description                           |
-| --------------------------------- | ------------------------------------- |
-| `p <name> <ident> [params]`       | Execute a probe: name = TRACK, WPMGR, FILESYS, DB (or t/w/f/d shortcuts); ident = probe name from .txt file |
-
 **FSH writing:**
 
 | Command    | Description                           |
@@ -139,21 +133,6 @@ into a serial terminal and processed by `handleSerialCommand()`.
 | [winRAYDP](winRAYDP.md)    | Live RAYDP service discovery - connect/spawn controls per advertised service |
 | [winFILESYS](winFILESYS.md)  | CF card file browser - directory navigation and file download |
 | [winDBNAV](winDBNAV.md)    | Live navigation data - decoded DBNAV multicast field values |
-
-## Probe System
-
-shark can execute probe files from `NET/probes/*.txt` using the `p` command.
-Probe files are written in a custom meta-language implemented in `b_probe.pm`.
-
-Available probe targets: `TRACK`, `WPMGR`, `FILESYS`, `DB`, `filecast`, `func22_t`
-
-Probe file directives: `PROBE`, `MSG`, `RAW`, `INC_SEQ`, `WAIT`, `UDP_DEST`, `UDP_PORT`, `>>>`
-
-Substitution tokens: `{time}`, `{seq}`, `{sid}`, `{port}`, `{string name}`, `{name16 name}`, `{params}`
-
-Probe files for implemented protocols are in `NET/probes/`. The probe system was
-the primary tool for discovering command semantics by sending structured guesses
-to the E80 and observing responses.
 
 ## Credits
 

@@ -43,7 +43,7 @@ my $COL_LOCAL_PORT 	= 7;
 my @COL_WIDTHS = (
 	9,		# $COL_DEVICE_ID
 	4,		# $COL_SERVICE_ID
-	10,		# $COL_NAME
+	14,		# $COL_NAME
 	6,      # $COL_PROTO
 	15,     # $COL_IP
 	6,      # $COL_PORT

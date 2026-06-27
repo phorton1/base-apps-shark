@@ -24,10 +24,17 @@ The **on/off** checkbox at the top starts and stops the tshark sniffer process.
 When unchecked, the per-port checkboxes are inert and the count columns do not
 update.
 
-## Per-port rows
+## Per-service rows
 
-One row per [RAYNET](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYNET.md) port, sorted alphabetically by RAYNAME. Each row shows port
-number, RAYNAME, and protocol type, followed by four checkboxes:
+One row per [RAYNET](https://github.com/phorton1/base-Pub-Ray/blob/master/NET/docs/RAYNET.md) service, in two groups: the **fixed** (always-on)
+services first, in port-number order, then the **instrument tail** in service-id
+order. The fixed services are keyed by their deterministic port number; the
+**instrument tail** (GPS, AutoPilot, Radar, the sonars, DGPS, Compass, Navtex,
+AIS) is keyed by `sid:proto` (e.g. `8:mcast`) rather than a port, because each
+takes the next free runtime port as its data appears. The sniffer resolves a
+captured tail packet to its row by reading the service id from the packet and the
+mcast-vs-udp face from the destination address. Each row shows that key, the
+RAYNAME, and the protocol type, followed by four checkboxes:
 
 | Checkbox | Description |
 | -------- | ----------- |

@@ -18,10 +18,17 @@ master on/off; individual ports are gated by their active checkbox.
 
 ![winShark](images/winShark.png)
 
-## Per-port rows
+## Per-service rows
 
-One row per RAYNET port, sorted alphabetically by RAYNAME. Each row shows port
-number, RAYNAME, and protocol type, followed by three checkboxes:
+One row per RAYNET service, in two groups: the **fixed** (always-on) services
+first, in port-number order, then the **instrument tail** in service-id order. The
+fixed services are keyed by their deterministic port number. The
+**instrument tail** - GPS, AutoPilot, Radar, the sonars, DGPS, Compass, Navtex,
+AIS - is keyed by `sid:proto` (e.g. `8:mcast`) rather than a port, because each
+takes the next free runtime port as its data appears, so the port is not fixed.
+Tail rows are always listed, whether or not the instrument is currently live.
+Each row shows that key, the RAYNAME, and the protocol type, followed by three
+checkboxes:
 
 | Checkbox | Description |
 | -------- | ----------- |

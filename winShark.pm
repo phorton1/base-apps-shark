@@ -52,12 +52,27 @@ my $ID_ONLY_BASE 	 = 4000;
 my $font_fixed = Wx::Font->new(10,wxFONTFAMILY_MODERN,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD);
 
 
-sub cmpFunc
+sub rowDef
+	# a monitor row is keyed by a numeric port for a fixed service,
+	# or by a "sid:proto" string for an instrument tail service
 {
-	my ($a,$b) = @_;
-	return
-		lc($SHARK_DEFAULTS{$a}->{name}) cmp
-		lc($SHARK_DEFAULTS{$b}->{name});
+	my ($key) = @_;
+	return $SHARK_DEFAULTS{$key} || $SHARK_TAIL_DEFAULTS{$key};
+}
+
+
+sub rowKeys
+	# fixed ports first, in port-number order, then the instrument tail,
+	# in sid order (then proto), so the two groups read as distinct blocks
+{
+	my @fixed = sort { $a <=> $b } keys %SHARK_DEFAULTS;
+	my @tail  = sort
+	{
+		my ($sa,$pa) = split(/:/,$a);
+		my ($sb,$pb) = split(/:/,$b);
+		$sa <=> $sb || $pa cmp $pb;
+	} keys %SHARK_TAIL_DEFAULTS;
+	return (@fixed,@tail);
 }
 
 
@@ -79,11 +94,11 @@ sub new
 
 	my @ctrls;
 	my $num = 0;
-	for my $port (sort {cmpFunc($a,$b)} keys %SHARK_DEFAULTS)
+	for my $port (rowKeys())
 	{
-		my $def = $SHARK_DEFAULTS{$port};
+		my $def = rowDef($port);
 		my $title =
-			pad($port,6).
+			pad($port,8).
 			pad($def->{name},12).
 			pad($def->{proto},5);
 		my $active_id = $ID_ACTIVE_BASE + $num;
@@ -104,8 +119,8 @@ sub new
 		$num++;
 	}
 
-	# $this->SetVirtualSize([$COL_TOTAL * $CHAR_WIDTH + 10,$TOP_MARGIN]);
-	# $this->SetScrollRate(0,$LINE_HEIGHT);
+	$this->SetVirtualSize([$CHECK_COL + 2*$CHECK_WIDTH,$TOP_MARGIN + $num*$LINE_HEIGHT]);
+	$this->SetScrollRate(0,$LINE_HEIGHT);
 	EVT_BUTTON($this,-1,\&onButton);
 	EVT_CHECKBOX($this,-1,\&onCheckBox);
 	# EVT_IDLE($this,\&onIdle);
@@ -149,9 +164,9 @@ sub onButton
 
 
 	my $num = 0;
-	for my $port (sort {cmpFunc($a,$b)} keys %SHARK_DEFAULTS)
+	for my $port (rowKeys())
 	{
-		my $def = $SHARK_DEFAULTS{$port};
+		my $def = rowDef($port);
 		if ($bit)
 		{
 			$on ? ($def->{log} |= $bit) : ($def->{log} &= ~$bit);
@@ -177,7 +192,7 @@ sub onCheckBox
 	display($dbg_win,0,"id($id) checked($checked)");
 
 	my $port = $box->{port};
-	my $def = $SHARK_DEFAULTS{$port};
+	my $def = rowDef($port);
 	display($dbg_win,1,sprintf("onCheckbox port($port) before active($def->{active}) log(%04x)",$def->{log}));
 
 	if ($id >= $ID_ONLY_BASE)

@@ -250,20 +250,23 @@ sub sniffer_thread
 				my $sid_bytes = substr($payload,$sid_offset,2);
 				my $sid = unpack('v',$sid_bytes);
 
-				# Now we look through the SNIFFER defaults for any one that has a matching sid and proto
+				# The instrument tail no longer lives in %SNIFFER_DEFAULTS (those are the
+				# fixed ports only); its monitor defaults are kept by "sid:proto" in
+				# %SNIFFER_TAIL_DEFAULTS.  A multicast destination ip means the mcast face
+				# of the service, otherwise the unicast udp face.  Tail services are
+				# udp+mcast only, so tcp never resolves here.
 
-				warning($dbg_sniff+2,0,"Checking sid($sid) proto($proto) for existing SNIFFER_DEFAULT");
+				my ($dst_octet1) = split(/\./,$dst_ip);
+				my $tail_proto = ($dst_octet1 >= 224 && $dst_octet1 <= 239) ? 'mcast' : $proto;
 
-				for my $port (keys %SNIFFER_DEFAULTS)
+				warning($dbg_sniff+2,0,"Checking sid($sid) proto($tail_proto) for existing SNIFFER_TAIL_DEFAULT");
+
+				my $try = $SNIFFER_TAIL_DEFAULTS{"$sid:$tail_proto"};
+				if ($try)
 				{
-					my $try = $SNIFFER_DEFAULTS{$port};
-					if ($try->{sid} == $sid && $try->{proto} eq $proto)
-					{
-						warning($dbg_sniff+2,1,"Found($port) at sid($sid) proto($proto) for existing SNIFFER_DEFAULT");
-						$def = $try;
-						$def_port = $port;
-						last;
-					}
+					warning($dbg_sniff+2,1,"Found tail sid($sid) proto($tail_proto) in SNIFFER_TAIL_DEFAULTS");
+					$def = $try;
+					$def_port = "$sid:$tail_proto";
 				}
 
 				# Acting under the assumption that the E80 is ALWAYS the server in these cases (?)
