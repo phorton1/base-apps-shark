@@ -24,7 +24,6 @@ BEGIN
 		$WIN_SHARK
 		$WIN_FILESYS
 		$WIN_DBNAV
-		$CMD_DOWNLOAD
     );
 }
 
@@ -38,9 +37,7 @@ our ($WIN_RAYDP,
 	 $WIN_SHARK,
 	 $WIN_SNIFFER,
 	 $WIN_FILESYS,
-	 $WIN_DBNAV,
-
-	 $CMD_DOWNLOAD ) = (10000..11000);
+	 $WIN_DBNAV ) = (10000..11000);
 
 
 # Pane data that allows looking up of notebook for windows
@@ -66,7 +63,6 @@ my $command_data = {
 	$WIN_SNIFFER 	=> ['Sniffer', 	'tshark based packet sniffer with parsers'],
 	$WIN_FILESYS 	=> ['FileSys', 	'Removable Media Fiile System'],
 	$WIN_DBNAV	 	=> ['DBNav', 	'Navigation Data'],
-	$CMD_DOWNLOAD	=> ['Download',	'Download Selected Items'],
 };
 
 
@@ -93,8 +89,8 @@ my $view_menu = [
 	@{$resources->{view_menu}}
 ];
 
-my $filesys_context_menu = [
-	$CMD_DOWNLOAD ];
+# winFILESYS owns its own context menu (ids, labels, and handlers);
+# the app contributes nothing to it.
 
 
 # Merge and reset the single public object
@@ -110,7 +106,6 @@ $resources = { %$resources,
     main_menu       => $main_menu,
     file_menu       => $file_menu,
 	view_menu       => $view_menu,
-	filesys_context_menu => $filesys_context_menu,
 
 };
 
